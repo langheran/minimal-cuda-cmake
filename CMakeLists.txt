@@ -33,11 +33,6 @@ if(BUILD_TESTING)
   add_test(NAME hello_10k COMMAND hello_world_test 10000 )
   add_test(NAME hello_256k COMMAND hello_world_test 256000 )
 
-  if(APPLE)
-    # We need to add the default path to the driver (libcuda.dylib) as an rpath,
-    # so that the static cuda runtime can find it at runtime.
-    set_property(TARGET hello_world_test PROPERTY BUILD_RPATH ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
-  endif()
 endif()
 
 
