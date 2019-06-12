@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE STRING "docstring" FORCE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE STRING "VSCode Intellisense" FORCE)
 set(CMAKE_C_COMPILER "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe")
 set(CMAKE_CXX_COMPILER "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe")
 
@@ -12,7 +12,6 @@ if(MSVC)
 endif()
 
 set(CMAKE_CXX_STANDARD 11)
-
 set(CMAKE_CUDA_COMPILE_OBJECT ${CMAKE_CUDA_COMPILE_WHOLE_COMPILATION})
 
 set(SOURCE
@@ -23,7 +22,8 @@ set(SOURCE
 #			sumArraysOnGPU.h
 #	)
 
-add_executable(${target_name} ${SOURCE})
+add_executable(${target_name} ${SOURCE}) # ${HEADERS}
+# TARGET_LINK_LIBRARIES(${target_name} namepace::library)
 set_target_properties(${target_name}
                        PROPERTIES CUDA_SEPARABLE_COMPILATION ON
                       )
