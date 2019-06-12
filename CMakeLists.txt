@@ -3,12 +3,10 @@
 cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
 project(cmake_and_cuda LANGUAGES CXX CUDA)
 
-include(CTest)
+# include(CTest)
 
-add_library(hello_world STATIC
-  hello.cpp
-  hello.cu
-  hello.h
+add_library(sumArraysOnGPU STATIC
+  sumArraysOnGPU.cu
   )
 
 # Request that particles be built with -std=c++11
@@ -34,6 +32,3 @@ if(BUILD_TESTING)
   add_test(NAME hello_256k COMMAND hello_world_test 256000 )
 
 endif()
-
-
-
