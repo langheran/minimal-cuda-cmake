@@ -1,14 +1,14 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
-#define CHECK(call)
-{
-    const cudaError_t error = call;
-    if (error != cudaSuccess)
-    {
-        printf("Error: %s:%d, ", __FILE__, __LINE__);
-        printf("code:%d, reason: %s\n", error, cudaGetErrorString(error));
-        exit(1);
-    }
+#define CHECK(call)                                                            \
+{                                                                              \
+    const cudaError_t error = call;                                            \
+    if (error != cudaSuccess)                                                  \
+    {                                                                          \
+        printf("Error: %s:%d, ", __FILE__, __LINE__);                          \
+        printf("code:%d, reason: %s\n", error, cudaGetErrorString(error));     \
+        exit(1);                                                               \
+    }                                                                          \
 }
 void checkResult(float *hostRef, float *gpuRef, const int N)
 {

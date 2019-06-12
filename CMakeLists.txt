@@ -1,34 +1,29 @@
-# first version by @robertmaynard
+cmake_minimum_required(VERSION 3.2)
 
-cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
-project(cmake_and_cuda LANGUAGES CXX CUDA)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE STRING "docstring" FORCE)
+set(CMAKE_C_COMPILER "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe")
+set(CMAKE_CXX_COMPILER "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe")
 
-# include(CTest)
+set (target_name sumArraysOnGPU)
+project(${target_name} LANGUAGES CUDA CXX)
 
-add_library(sumArraysOnGPU STATIC
-  sumArraysOnGPU.cu
-  )
+if(MSVC)
+	set(CMAKE_CXX_FLAGS "/FS /EHsc /FC") # No pdb concurrency, no warnings, full paths for $msCompile problemMatcher.
+endif()
 
-# Request that particles be built with -std=c++11
-# As this is a public compile feature anything that links to particles
-# will also build with -std=c++11
-target_compile_features(hello_world PUBLIC cxx_std_11)
+set(CMAKE_CXX_STANDARD 11)
 
-# We need to explicitly state that we need all CUDA files in the particle
-# library to be built with -dc as the member functions could be called by
-# other libraries and executables
-set_target_properties( hello_world
+set(CMAKE_CUDA_COMPILE_OBJECT ${CMAKE_CUDA_COMPILE_WHOLE_COMPILATION})
+
+set(SOURCE
+			sumArraysOnGPU.cu
+	)
+
+#set(HEADERS
+#			sumArraysOnGPU.h
+#	)
+
+add_executable(${target_name} ${SOURCE})
+set_target_properties(${target_name}
                        PROPERTIES CUDA_SEPARABLE_COMPILATION ON
                       )
-
-if(BUILD_TESTING)
-
-  add_executable(hello_world_test test.cu)
-
-  set_target_properties(hello_world_test PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-  target_link_libraries(hello_world_test PRIVATE particles)
-
-  add_test(NAME hello_10k COMMAND hello_world_test 10000 )
-  add_test(NAME hello_256k COMMAND hello_world_test 256000 )
-
-endif()
