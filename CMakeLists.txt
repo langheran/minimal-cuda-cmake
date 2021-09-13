@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE STRING "VSCode Intellisense" FORCE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE STRING "VSCode Intellisense." FORCE)
 set(CMAKE_C_COMPILER "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe")
 set(CMAKE_CXX_COMPILER "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe")
 
@@ -21,6 +21,11 @@ set(SOURCE
 #set(HEADERS
 #			sumArraysOnGPU.h
 #	)
+
+find_package(CUDA 8.0)
+if(${CUDA_FOUND})
+	set(CUDA_VERBOSE_BUILD ON)
+endif()
 
 add_executable(${target_name} ${SOURCE}) # ${HEADERS}
 # TARGET_LINK_LIBRARIES(${target_name} namepace::library)
